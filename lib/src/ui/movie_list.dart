@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../models/movie_item.dart';
+import '../resources/movie_api_provider.dart';
+
 class MovieList extends StatefulWidget {
   const MovieList({super.key});
 
@@ -8,9 +11,60 @@ class MovieList extends StatefulWidget {
 }
 
 class _MovieListState extends State<MovieList> {
+  late MovieApiProvider api;
+
+  @override
+  void initState() {
+    super.initState();
+    api = new MovieApiProvider();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return FutureBuilder<MovieItem>(
+        future: api.getMovieList(),
+        builder: (context, snapshot) {
+          if(snapshot.hasData) {
+            return buildMovieGrid(snapshot);
+          } else if(snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+
+          return Center(
+              child: CircularProgressIndicator()
+          );
+        }
+    );
+  }
+
+  Widget buildMovieGrid(AsyncSnapshot<MovieItem> snapshot) {
+    return GridView.builder(
+        itemCount: snapshot.data?.results?.length,
+        gridDelegate:
+        new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 0.7
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return GridTile(
+              child: InkResponse(
+                enableFeedback: true,
+                child: Image.network(
+                  'https://image.tmdb.org/t/p/w185${snapshot.data!.results?[index]
+                      .posterPath}',
+                  fit: BoxFit.cover,
+                ),
+                onTap: () => openDetailPelicula(snapshot.data, index),
+              )
+
+
+          );
+        }
+    );
+  }
+
+  openDetailPelicula(MovieItem? data, int index) {
+
   }
 
 }
