@@ -28,43 +28,35 @@ class _MovieListState extends State<MovieList> {
             return buildMovieGrid(snapshot);
           } else if(snapshot.hasError) {
             return Text(snapshot.error.toString());
-          }
-
-          return Center(
-              child: CircularProgressIndicator()
+          } else
+            return Center(child: CircularProgressIndicator()
           );
-        }
-    );
+        });
   }
 
   Widget buildMovieGrid(AsyncSnapshot<MovieItem> snapshot) {
     return GridView.builder(
         itemCount: snapshot.data?.results?.length,
-        gridDelegate:
-        new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 0.7
-        ),
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 0.7),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: InkResponse(
                 enableFeedback: true,
                 child: Image.network(
-                  'https://image.tmdb.org/t/p/w185${snapshot.data!.results?[index]
-                      .posterPath}',
+                  "https://image.tmdb.org/t/p/w185${snapshot.data!.results?[index].posterPath}",
                   fit: BoxFit.cover,
                 ),
                 onTap: () => openDetailPelicula(snapshot.data, index),
-              )
-
-
+              ),
+            ),
           );
-        }
-    );
+        });
   }
 
   openDetailPelicula(MovieItem? data, int index) {
 
   }
-
 }
