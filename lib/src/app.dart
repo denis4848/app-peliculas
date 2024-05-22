@@ -13,7 +13,7 @@ class App extends StatelessWidget {
         body: MovieList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {  },
-          child: Icon(Icons.movie),
+          child: const Icon(Icons.movie),
 
         ),
       ),

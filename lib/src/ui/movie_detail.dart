@@ -1,4 +1,4 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 class MovieDetail extends StatefulWidget {
   final posterURL;
@@ -37,4 +37,4 @@ class _MovieDetailState extends State<MovieDetail> {
   Widget build(BuildContext context) {
     return const Placeholder();
   }
-}*/
+}
