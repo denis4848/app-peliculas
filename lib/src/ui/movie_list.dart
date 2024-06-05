@@ -42,7 +42,7 @@ class _MovieListState extends State<MovieList> {
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: InkResponse(
                 enableFeedback: true,
                 child: Image.network(
