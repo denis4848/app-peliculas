@@ -8,17 +8,24 @@ class MovieDetail extends StatefulWidget {
   final String voteAvarage;
   final int movieId;
 
-  const MovieDetail({super.key, this.posterURL, this.description, this.releaseData, required this.title, required this.voteAvarage, required this.movieId});
+  const MovieDetail(
+      {super.key,
+      this.posterURL,
+      this.description,
+      this.releaseData,
+      required this.title,
+      required this.voteAvarage,
+      required this.movieId});
 
   @override
   State<MovieDetail> createState() => _MovieDetailState(
-    posterURL: posterURL,
-    description: description,
-    title: title,
-    movieId: movieId,
-    releaseData: releaseData,
-    voteAvarage: voteAvarage,
-  );
+        posterURL: posterURL,
+        description: description,
+        title: title,
+        movieId: movieId,
+        releaseData: releaseData,
+        voteAvarage: voteAvarage,
+      );
 }
 
 class _MovieDetailState extends State<MovieDetail> {
@@ -29,12 +36,41 @@ class _MovieDetailState extends State<MovieDetail> {
   final String voteAvarage;
   final int movieId;
 
-  _MovieDetailState({ this.posterURL, this.description, this.releaseData, required this.title, required this.voteAvarage, required this.movieId});
-
-
+  _MovieDetailState(
+      {this.posterURL,
+      this.description,
+      this.releaseData,
+      required this.title,
+      required this.voteAvarage,
+      required this.movieId});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 200.0,
+                elevation: 0.0,
+                floating: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Image.network(
+                    "https://image.tmdb.org/t/p/w500${posterURL}",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            ];
+          },
+          body: Container(
+            child: Text(title),
+          ),
+        ),
+      ),
+    );
   }
 }

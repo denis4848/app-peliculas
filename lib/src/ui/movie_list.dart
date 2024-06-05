@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/src/ui/movie_detail.dart';
 
 import '../models/movie_item.dart';
 import '../resources/movie_api_provider.dart';
@@ -57,6 +58,16 @@ class _MovieListState extends State<MovieList> {
   }
 
   openDetailPelicula(MovieItem? data, int index) {
-
+    Navigator.push(context,
+    MaterialPageRoute(builder: (context) {
+      return MovieDetail(
+        posterURL: data!.results![index].backdropPath,
+        description: data!.results![index].overview,
+        title: data!.results![index].title.toString(),
+        movieId: data!.results![index].id!.toInt(),
+        releaseData: data!.results![index].releaseDate,
+        voteAvarage: data!.results![index].voteAverage.toString(),
+      );
+    }));
   }
 }
