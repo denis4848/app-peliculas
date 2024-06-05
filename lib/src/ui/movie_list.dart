@@ -62,11 +62,11 @@ class _MovieListState extends State<MovieList> {
     MaterialPageRoute(builder: (context) {
       return MovieDetail(
         posterURL: data!.results![index].backdropPath,
-        description: data!.results![index].overview,
-        title: data!.results![index].title.toString(),
-        movieId: data!.results![index].id!.toInt(),
-        releaseData: data!.results![index].releaseDate,
-        voteAvarage: data!.results![index].voteAverage.toString(),
+        description: data.results![index].overview,
+        title: data.results![index].title.toString(),
+        movieId: data.results![index].id!.toInt(),
+        releaseData: data.results![index].releaseDate,
+        voteAvarage: data.results![index].voteAverage.toString(),
       );
     }));
   }
