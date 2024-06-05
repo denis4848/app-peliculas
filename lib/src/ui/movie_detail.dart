@@ -63,11 +63,41 @@ class _MovieDetailState extends State<MovieDetail> {
                     fit: BoxFit.cover,
                   ),
                 ),
-              )
+              ),
             ];
           },
-          body: Container(
-            child: Text(title),
+          body: Padding(
+            padding: const EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0),
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.star, color: Colors.amber),
+                    Text(
+                      voteAvarage,
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    Padding(padding: EdgeInsets.only(right: 200.0)),
+                    Text(
+                      releaseData,
+                      style: TextStyle(
+                          fontSize: 18.0, fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
