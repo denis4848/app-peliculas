@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/src/models/trailer_item.dart';
+import 'package:movies_app/src/resources/movie_api_provider.dart';
 
 class MovieDetail extends StatefulWidget {
   final posterURL;
@@ -29,6 +31,8 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
+  late MovieApiProvider api;
+
   final posterURL;
   final description;
   final releaseData;
@@ -46,6 +50,7 @@ class _MovieDetailState extends State<MovieDetail> {
 
   @override
   Widget build(BuildContext context) {
+    api = new MovieApiProvider();
     return Scaffold(
       body: SafeArea(
         top: false,
@@ -99,10 +104,36 @@ class _MovieDetailState extends State<MovieDetail> {
                     ),
                   ],
                 ),
-                Padding(padding: EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0)),
+                Padding(
+                    padding:
+                        EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0)),
                 Text(
                   description,
                   style: TextStyle(fontSize: 18.0),
+                ),
+                Padding(
+                    padding:
+                        EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0)),
+                Text(
+                  "Trailers",
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                FutureBuilder<TrailerItem>(
+                    future: api.getVideos(movieId),
+                    builder: (context, trailerSnapshot) {
+                      if(trailerSnapshot.hasData) {
+                        if (trailerSnapshot.data?.results!.length! > 0){
+                          return trailerLayout(trailerSnapshot.data);
+                        } else {
+                          return noTrailer(trailerSnapshot.data);
+                        }
+                      } else {
+                      return Center(child: CircularProgressIndicator());
+                      }
+                    }
                 )
               ],
             ),
@@ -110,5 +141,15 @@ class _MovieDetailState extends State<MovieDetail> {
         ),
       ),
     );
+  }
+
+  Widget noTrailer(TrailerItem? data) {
+    return Center(
+        child: Text("No hay trailers"),);
+  }
+
+  Widget trailerLayout(TrailerItem? data) {
+    return Center(
+      child: Text("Hay trailers"),);
   }
 }
