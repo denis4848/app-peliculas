@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app/src/models/trailer_item.dart';
 import 'package:movies_app/src/resources/movie_api_provider.dart';
@@ -114,27 +116,28 @@ class _MovieDetailState extends State<MovieDetail> {
                 Padding(
                     padding:
                         EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0)),
-                Text(
-                  "Trailers",
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
+                Center(
+                  child: Text(
+                    "Trailers",
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 FutureBuilder<TrailerItem>(
                     future: api.getVideos(movieId),
                     builder: (context, trailerSnapshot) {
-                      if(trailerSnapshot.hasData) {
-                        if (trailerSnapshot.data?.results!.length! > 0){
+                      if (trailerSnapshot.hasData) {
+                        if (trailerSnapshot.data?.results != null) {
                           return trailerLayout(trailerSnapshot.data);
                         } else {
                           return noTrailer(trailerSnapshot.data);
                         }
                       } else {
-                      return Center(child: CircularProgressIndicator());
+                        return Center(child: CircularProgressIndicator());
                       }
-                    }
-                )
+                    })
               ],
             ),
           ),
@@ -145,11 +148,39 @@ class _MovieDetailState extends State<MovieDetail> {
 
   Widget noTrailer(TrailerItem? data) {
     return Center(
-        child: Text("No hay trailers"),);
+      child: Text("No hay trailers"),
+    );
   }
 
   Widget trailerLayout(TrailerItem? data) {
-    return Center(
-      child: Text("Hay trailers"),);
+    return Center(child: trailerItemLayout(data, 0));
   }
+
+  trailerItemLayout(TrailerItem? data, int i) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.all(5.0),
+          height: 100.0,
+          color: Colors.grey,
+          child: Center(
+            child: IconButton(
+                onPressed: () {
+                  _verVideo(data!.results![i].key, data!.results![i].site);
+                },
+                icon: Icon(Icons.play_circle_filled)),
+          ),
+        ),
+        Text(
+          data!.results![i].name.toString(),
+          maxLines: 1,
+          overflow: TextOverflow.fade,
+        ),
+      ],
+    );
+  }
+}
+
+void _verVideo(String? key, String? site) {
+
 }
