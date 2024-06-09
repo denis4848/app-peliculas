@@ -71,22 +71,25 @@ class _MovieDetailState extends State<MovieDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
+                Center(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0),
+                  padding:
+                      const EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0),
                 ),
                 Row(
                   children: [
                     Icon(Icons.star, color: Colors.amber),
                     Text(
                       voteAvarage,
-                      style: TextStyle(fontSize: 18.0),
+                      style: TextStyle(fontSize: 18.0, color: Colors.amber),
                     ),
                     Padding(padding: EdgeInsets.only(right: 200.0)),
                     Text(
@@ -95,6 +98,11 @@ class _MovieDetailState extends State<MovieDetail> {
                           fontSize: 18.0, fontStyle: FontStyle.italic),
                     ),
                   ],
+                ),
+                Padding(padding: EdgeInsets.only(top: 18.0, right: 10.0, left: 10.0)),
+                Text(
+                  description,
+                  style: TextStyle(fontSize: 18.0),
                 )
               ],
             ),
