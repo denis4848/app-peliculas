@@ -1,5 +1,5 @@
 import 'dart:core';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/src/models/trailer_item.dart';
 import 'package:movies_app/src/resources/movie_api_provider.dart';
@@ -166,7 +166,7 @@ class _MovieDetailState extends State<MovieDetail> {
           child: Center(
             child: IconButton(
                 onPressed: () {
-                  _verVideo(data!.results![i].key, data!.results![i].site);
+                  _verVideo(data!.results![i].key, data.results![i].site);
                 },
                 icon: Icon(Icons.play_circle_filled)),
           ),
@@ -181,6 +181,13 @@ class _MovieDetailState extends State<MovieDetail> {
   }
 }
 
-void _verVideo(String? key, String? site) {
-
-}
+Future<void> _verVideo(String? key, String? site) async {
+  String videoBaseUrl;
+  if (site == "YouTube") {
+    videoBaseUrl = "https://www.youtube.com/watch?v=${key}";
+  } else {
+    videoBaseUrl = "www.vimeo.com/${key}";
+  }
+    String url = "https://www.youtube.com/watch?v=${key}";
+    await launch(videoBaseUrl);
+  }
